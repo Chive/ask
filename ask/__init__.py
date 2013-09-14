@@ -1,6 +1,6 @@
-__version__ = '0.0.1'
+__version__ = '0.0.2'
 
-error = 'Invalid input, please try again'
+import sys
 
 # Fix python 2.x
 try:
@@ -9,18 +9,25 @@ except NameError:
     pass
 
 
-def standard_check(input, possibilities, default):
-    if possibilities:
-        if input in possibilities:
-            return True
-        else:
-            return False
+def highlight(string, status):
+    if sys.stdout.isatty():
+        mods = {
+            'green': '32',
+            'red': '31',
+            'bold': '1',
+        }
+        attr = []
+        if status == 'error':
+            attr.append(mods['red'])
+            attr.append(mods['bold'])
+        return '\x1b[%sm%s\x1b[0m' % (';'.join(attr), string)
+    else:
+        return string
 
-    elif input == '':
-        if default or default == '':
-            return True
 
-    return False
+def print_error():
+    error = 'Invalid input, please try again'
+    print(highlight(error, 'error'))
 
 
 def buildText(question, possibilities, default):
@@ -83,21 +90,21 @@ def _ask(text, possibilities, default, check_method):
             if default:
                 return default
             else:
-                print(error)
+                print_error()
                 continue
 
         elif possibilities:
             if i in possibilities:
                 return i
             else:
-                print(error)
+                print_error()
                 continue
 
         else:
             if check_method(i):
                 return i
             else:
-                print(error)
+                print_error()
                 continue
 
 
