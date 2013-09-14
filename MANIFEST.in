@@ -1,0 +1,5 @@
+include LICENSE
+recursive-include pyrate *
+recursive-exclude * *.pyc
+recursive-exclude * .DS_Store
+recursive-exclude exclude *
