@@ -1,4 +1,4 @@
-__version__ = '0.0.3'
+__version__ = '0.0.4'
 
 import sys
 from getpass import getpass
@@ -99,7 +99,7 @@ def _ask(text, possibilities, default, check_method, masked=False):
             i = input(buildText(text, possibilities, default))
 
         if i == '':
-            if default:
+            if default or default == '':
                 return default
             else:
                 print_error()
