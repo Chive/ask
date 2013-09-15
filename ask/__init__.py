@@ -11,6 +11,8 @@ except NameError:
     pass
 
 
+# https://www.siafoo.net/snippet/88
+# or http://stackoverflow.com/questions/287871/print-in-terminal-with-colors-using-python
 def highlight(string, status):
     if sys.stdout.isatty():
         mods = {
@@ -67,8 +69,8 @@ def checkInt(i):
     return True
 
 
-def checkChar(i):
-    if len(i) == 1 and i.lower() in 'abcdefghijklmnopqrstuvwxyz':
+def checkChar(ch):
+    if len(ch) == 1 and ch.lower() in 'abcdefghijklmnopqrstuvwxyz':
         return True
 
 
