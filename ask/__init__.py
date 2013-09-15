@@ -1,4 +1,4 @@
-__version__ = '0.0.5'
+__version__ = '0.0.6'
 
 import sys
 from getpass import getpass
@@ -16,6 +16,7 @@ except NameError:
 def highlight(string, status):
     if sys.stdout.isatty():
         mods = {
+            'yellow': '33',
             'green': '32',
             'red': '31',
             'bold': '1',
@@ -24,6 +25,13 @@ def highlight(string, status):
         if status == 'error':
             attr.append(mods['red'])
             attr.append(mods['bold'])
+
+        elif status == 'msg':
+            attr.append(mods['green'])
+
+        elif status == 'notice':
+            attr.append(mods['yellow'])
+
         return '\x1b[%sm%s\x1b[0m' % (';'.join(attr), string)
     else:
         return string
@@ -148,3 +156,14 @@ def askPassword(text=None, possibilities=None, default=None):
 
 def ask(text=None, possibilities=None, default=None):
     return _ask(text, possibilities, default, checkNone)
+
+
+def explain(credit=False):
+    instructions = "Attention: Input prompts follow this template:\n" \
+                   "\"Question (answer1, answer2, answer3) [default_answer]\"\n" \
+                   "(You can just hit enter to chose the default answer)"
+    credits = "[Powered by ask (www.github.com/Chive/ask)]"
+
+    print(highlight(instructions, 'msg'))
+    if credit:
+        print(highlight(credits, 'notice'))
