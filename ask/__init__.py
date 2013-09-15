@@ -1,6 +1,8 @@
 __version__ = '0.0.2'
 
 import sys
+from getpass import getpass
+import re
 
 # Fix python 2.x
 try:
@@ -78,13 +80,21 @@ def checkString(string):
     return True
 
 
+def checkEmail(email):
+    if re.match(r".+\@.+\..+", email):
+        return True
+
+
 def checkNone(i):
     return True
 
 
-def _ask(text, possibilities, default, check_method):
+def _ask(text, possibilities, default, check_method, masked=False):
     while True:
-        i = input(buildText(text, possibilities, default))
+        if masked:
+            i = getpass(buildText(text, possibilities, default))
+        else:
+            i = input(buildText(text, possibilities, default))
 
         if i == '':
             if default:
@@ -118,6 +128,14 @@ def askChar(text=None, possibilities=None, default=None):
 
 def askString(text=None, possibilities=None, default=None):
     return _ask(text, possibilities, default, checkString)
+
+
+def askEmail(text=None, possibilities=None, default=None):
+    return _ask(text, possibilities, default, checkEmail)
+
+
+def askPassword(text=None, possibilities=None, default=None):
+    return _ask(text, possibilities, default, checkNone, masked=True)
 
 
 def ask(text=None, possibilities=None, default=None):
