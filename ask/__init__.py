@@ -1,4 +1,4 @@
-__version__ = '0.0.4'
+__version__ = '0.0.5'
 
 import sys
 from getpass import getpass
@@ -125,6 +125,12 @@ def askInt(text=None, possibilities=None, default=None):
 
 
 def askChar(text=None, possibilities=None, default=None):
+    return _ask(text, possibilities, default, checkChar)
+
+
+def askBool(text=None, possibilities=None, default=None):
+    if not possibilities:
+        possibilities = ['y', 'n']
     return _ask(text, possibilities, default, checkChar)
 
 
