@@ -50,8 +50,8 @@ def buildText(question, possibilities, default):
     if possibilities:
         text += "("
         for p in possibilities:
-            text += str(p) + ", "
-        text = text[:-2]
+            text += str(p) + "/"
+        text = text[:-1]
         text += ") "
 
     if default or default == '':
