@@ -1,4 +1,4 @@
-__version__ = '0.0.7'
+__version__ = '0.0.8'
 
 import sys
 from getpass import getpass
@@ -144,13 +144,13 @@ def askBool(text=None, possibilities=None, default=None):
         'False': ['n', 'no', 'nein']
     }
 
-    with _ask(text, possibilities, default, checkChar) as a:
-        if a in answers['True']:
-            return True
-        elif a in answers['False']:
-            return False
-        else:
-            return a
+    a = _ask(text, possibilities, default, checkChar)
+    if a in answers['True']:
+        return True
+    elif a in answers['False']:
+        return False
+    else:
+        return a
 
 
 def askString(text=None, possibilities=None, default=None):
